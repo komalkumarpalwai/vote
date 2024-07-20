@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voting App</title>
+  <!-- TailwindCSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    /* Custom Animation for Text Color */
+    @keyframes colorChange {
+      0% { color: #f87171; } /* red-400 */
+      50% { color: #60a5fa; } /* blue-400 */
+      100% { color: #f87171; } /* red-400 */
+    }
+
+    .animate-color-change {
+      animation: colorChange 2s infinite;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+      <div class="relative flex items-center justify-center h-16">
+        <div class="absolute inset-0 flex items-center justify-center">
+          <img src="https://nodwingaming.com/assets/img/Nodwin-Gaming.png" alt="Nodwin Gaming" class="h-16">
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Animated Heading -->
+  <div class="flex items-center justify-center h-32 bg-gray-200">
+    <h1 class="text-4xl font-bold text-center animate-color-change">
+      <span class="text-red-400">Sack</span>
+      <span class="text-blue-400">Jonathan</span>
+    </h1>
+  </div>
+
+  <!-- Main Content -->
+  <div class="w-full max-w-md mx-auto p-8 space-y-6 bg-white rounded-lg shadow-md mt-8">
+    <h2 class="text-2xl font-bold text-center">Vote for Your Favorite Team</h2>
+    <p class="text-center text-gray-600">Each user can vote only once.</p>
+    <form id="voteForm" class="space-y-4">
+      <!-- Team 1 -->
+      <div class="flex items-center hover:bg-green-300 transition duration-300">
+        <input type="radio" name="team" id="team1" value="Team IQOOSOUL" class="hidden">
+        <label for="team1" class="flex items-center cursor-pointer">
+          <img src="https://www.financialexpress.com/wp-content/uploads/2023/12/My-project-2023-12-13T094713.772.png?w=440" alt="Team 1" class="w-24 h-24 mr-2">
+          Team IQOOSOUL
+        </label>
+      </div>
+      <!-- Team 2 -->
+      <div class="flex items-center hover:bg-red-900 transition duration-300">
+        <input type="radio" name="team" id="team2" value="Team DOGLIKE" class="hidden">
+        <label for="team2" class="flex items-center cursor-pointer">
+          <img src="data:image/png;base64,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" alt="Team 2" class="w-24 h-24 mr-2">
+          Team DOGLIKE
+        </label>
+      </div>
+      <!-- Team 3 -->
+      <div class="flex items-center hover:bg-blue-300 transition duration-300">
+        <input type="radio" name="team" id="team3" value="Team ZERO" class="hidden">
+        <label for="team3" class="flex items-center cursor-pointer">
+          <img src="https://cdn.eslgaming.com/play/eslgfx/gfx/logos/teams/13608000/13608890_medium.jpg" alt="Team 3" class="w-24 h-24 mr-2">
+          Team ZERO
+        </label>
+      </div>
+      <!-- Team 4 -->
+      <div class="flex items-center hover:bg-blue-300 transition duration-300">
+        <input type="radio" name="team" id="team4" value="Team RNT" class="hidden">
+        <label for="team4" class="flex items-center cursor-pointer">
+          <img src="https://rukminim2.flixcart.com/image/850/1000/kzx1a4w0/sticker/m/r/i/medium-404-error-not-found-0-1-an-sb6528-sign-ever-original-imagbtu8ztxntpkx.jpeg?q=20&crop=false" alt="Team 4" class="w-24 h-24 mr-2">
+          Team RNT(sack SENSI FROM IGC)
+        </label>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Submit Vote</button>
+      </div>
+    </form>
+    <!-- Result Display -->
+    <div id="result" class="text-center mt-4">
+      <p id="resultText" class="text-lg font-semibold text-gray-700"></p>
+    </div>
+  </div>
+  <style>
+    .progress-bar {
+        height: 1.5rem;
+        border-radius: 9999px;
+        
+    }
+    #voteeeee{
+        margin-left: 30%;
+        display: none;
+    }
+</style>
+<div class="w-full max-w-lg p-6 bg-white shadow-md rounded-lg" id="voteeeee">
+    <h1 class="text-2xl font-bold mb-4">Voting Results</h1>
+    <div class="space-y-4">
+        <div class="flex items-center justify-between">
+            <span class="font-semibold">IQOOSOUL</span>
+            <div class="w-full ml-4 bg-gray-200 rounded-full">
+                <div id="progressBarIQOOSOUL" class="progress-bar bg-blue-500" style="width: 45%"></div>
+            </div>
+            <span id="percentageIQOOSOUL" class="ml-4">45%</span>
+        </div>
+        <div class="flex items-center justify-between">
+            <span class="font-semibold">TeamZero</span>
+            <div class="w-full ml-4 bg-gray-200 rounded-full">
+                <div id="progressBarTeamZero" class="progress-bar bg-green-500" style="width: 30%"></div>
+            </div>
+            <span id="percentageTeamZero" class="ml-4">30%</span>
+        </div>
+        <div class="flex items-center justify-between">
+            <span class="font-semibold">RNT</span>
+            <div class="w-full ml-4 bg-gray-200 rounded-full">
+                <div id="progressBarRNT" class="progress-bar bg-yellow-500" style="width: 20%"></div>
+            </div>
+            <span id="percentageRNT" class="ml-4">20%</span>
+        </div>
+        <div class="flex items-center justify-between">
+            <span class="font-semibold">Doglike</span>
+            <div class="w-full ml-4 bg-gray-200 rounded-full">
+                <div id="progressBarDoglike" class="progress-bar bg-red-500" style="width: 5%"></div>
+            </div>
+            <span id="percentageDoglike" class="ml-4">5%</span>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('voteForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+  
+      const voteeeee = document.getElementById("voteeeee");
+      voteeeee.style.display = "block";
+      
+      const selectedTeam = document.querySelector('input[name="team"]:checked');
+      
+      if (selectedTeam) {
+        document.getElementById('resultText').textContent = `You voted for ${selectedTeam.value}`;
+      } else {
+        document.getElementById('resultText').textContent = 'Please select a team to vote for.';
+      }
+    });
+    let teamVotes = {
+    IQOOSOUL: 45,
+    TeamZero: 30,
+    RNT: 20,
+    Doglike: 5
+  };
+
+  // Function to update the progress bars and percentages
+  function updateProgressBars() {
+    Object.keys(teamVotes).forEach(team => {
+      const progressBar = document.getElementById(`progressBar${team}`);
+      const percentageText = document.getElementById(`percentage${team}`);
+      
+      if (progressBar && percentageText) {
+        const percentage = Math.round(teamVotes[team]);
+        progressBar.style.width = `${percentage}%`;
+        percentageText.textContent = `${percentage}%`;
+      }
+    });
+  }
+
+  document.getElementById('voteForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const voteeeee = document.getElementById("voteeeee");
+    voteeeee.style.display = "block";
+
+    const selectedTeam = document.querySelector('input[name="team"]:checked');
+    
+    if (selectedTeam) {
+      const teamName = selectedTeam.value;
+
+      // Increment the selected team's vote count by 5%
+      if (teamVotes[teamName] + 5 <= 100) {
+        teamVotes[teamName] += 5;
+      }
+      
+      // Ensure IQOOSOUL and TeamZero are in the lead
+      if (teamVotes.IQOOSOUL <= teamVotes.TeamZero) {
+        teamVotes.IQOOSOUL += 5;
+      }
+      
+      // Distribute decrease among other teams while keeping IQOOSOUL and TeamZero in the lead
+      let totalDecrease = 5; // Total percentage to decrease
+      let otherTeams = Object.keys(teamVotes).filter(team => team !== teamName);
+
+      otherTeams.forEach(team => {
+        if (team !== 'IQOOSOUL' && team !== 'TeamZero') {
+          let decrease = Math.min(totalDecrease / otherTeams.length, teamVotes[team]);
+          teamVotes[team] -= decrease;
+          totalDecrease -= decrease;
+          if (totalDecrease <= 0) return;
+        }
+      });
+
+      updateProgressBars();
+      
+      document.getElementById('resultText').textContent = `You voted for ${teamName}`;
+    } else {
+      document.getElementById('resultText').textContent = 'Please select a team to vote for.';
+    }
+  });
+</script>
+  
+</body>
+</html>
