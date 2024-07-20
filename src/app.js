@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const path = require('path');
 const voteRoutes = require('./routes/votes');
 
 dotenv.config();
@@ -13,11 +14,17 @@ app.use(express.static('public'));
 
 app.use('/api/votes', voteRoutes);
 
+// Serve the index.html file for the main route
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+// MongoDB connection
+mongoose.connect(process.env.MONGO_URI, {})
   .then(() => {
-    app.listen(process.env.PORT || 3000, () => {
-      console.log('Server is running on port 3000');
+    const port = process.env.PORT || 3000;
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
     });
   })
-  .catch(err => console.error(err));
+  .catch(err => console.error('MongoDB connection error:', err));
